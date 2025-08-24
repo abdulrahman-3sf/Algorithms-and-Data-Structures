@@ -35,16 +35,44 @@
 
     Processes:
         - validations:
-            - node is not null
+            - nodeBeforeNewNode is not null
             - check the index if it is valid
     
         - insert after:
             - create node newNode of data
-            - make newNode.next = node of index next pointer
-            - make node of index next pointer = newNode
+            - make newNode.next = nodeBeforeNewNode.next
+            - nodeBeforeNewNode.next = newNode
             - if newNode.next == null, this mean its is the last node, then:
                 - tail = newNode
      
+    Output:
+        - None
+
+    --------------------------------------------------------
+    
+    Name: Insert Before
+
+    Assumptions:
+        - None
+
+    Inputs:
+        - index
+        - data
+
+    Processes:
+        - validations:
+            - nodeBeforeNewNode is not null
+            - check the index if it is valid
+    
+        - insert before:
+            - create node newNode of data
+            - make newNode.next = nodeAfterNewNode
+            - find node before nodeAfterNewNode (parent)
+            - if parent == null then
+                - head = newNode
+            -else
+                - parent.next = newNode
+    
     Output:
         - None
 */
@@ -125,13 +153,28 @@ class LinkedList {
         let newNode = new LinkedListNode(data);
         let nodeBeforeNewNode = this.find(index);
 
-        if (newNode == null || nodeBeforeNewNode == null) return;
+        if (nodeBeforeNewNode == null) return;
 
         newNode.next = nodeBeforeNewNode.next;
         nodeBeforeNewNode.next = newNode;
 
         if (newNode.next == null)
             this.tail = newNode;
+    }
+
+    insertBefore(index, data) {
+        let newNode = new LinkedListNode(data);
+        let nodeAfterNewNode = this.find(index);
+        let parentNode = this.find(index - 1);
+
+        if (nodeAfterNewNode == null) return;
+
+        newNode.next = nodeAfterNewNode;
+
+        if (parentNode == null)
+            this.head = newNode;
+        else
+            parentNode.next = newNode;
     }
 }
 
@@ -143,6 +186,8 @@ list.insertLast(3);
 
 list.printList();
 
-list.insertAfter(0, 55);
+// list.insertAfter(0, 55);
+
+list.insertBefore(1, 99);
 
 list.printList();
