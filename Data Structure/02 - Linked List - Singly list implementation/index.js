@@ -75,6 +75,45 @@
     
     Output:
         - None
+
+    --------------------------------------------------------
+    
+    Name: Delete Node
+
+    Assumptions:
+        - None
+
+    Inputs:
+        - index or data
+
+    Processes:
+        - validations:
+            - node is not null
+    
+        - delete node:
+            #1 delete single node
+                - if head == tail:
+                    - head and tail = null
+                
+            #2 delete node at first
+                - else if head == node:
+                    - head = head.next
+                    - node.next = null (when you do not delete the nodeToDelete)
+
+            #3 delete node at last or in the middle
+                - else
+                    - find parent
+                    - if tail == node:
+                        - tail = parent
+                        - tail.next = null (when you do not delete the nodeToDelete)
+                    - else
+                        - parent.next = node.next
+                        - node.next = null (when you do not delete the nodeToDelete)
+
+            - delete nodeToDelete in all cases
+    
+    Output:
+        - None
 */
 
 class LinkedListNode {
@@ -140,12 +179,20 @@ class LinkedList {
         }
     }
 
-    find(index) {
-        for (let itr = this.begin(), i = 0; itr.current() != null; itr.next()) {
-            if (i == index)
-                return itr.current();
-            i++;
+    find(index, data, findParent = false) {
+        if (findParent) { // find the parent node using data
+            for (let itr = this.begin(); itr.current() != null; itr.next()) {
+                if (itr.current().next != null & itr.current().next.data == data)
+                    return itr.current();
+            }
+        } else { // find the node using index, data & find the parent using index
+            for (let itr = this.begin(), i = 0; itr.current() != null; itr.next()) {
+                if (i == index || data == itr.data())
+                    return itr.current();
+                i++;
+            }
         }
+
         return null;
     }
 
@@ -176,6 +223,47 @@ class LinkedList {
         else
             parentNode.next = newNode;
     }
+
+    deleteNode(index, data) {
+        let useData = (data != null);
+        let nodeToDelet;
+
+        // This because we use index or data to delete node and we use the same function find
+        if (useData)
+            nodeToDelet = this.find(null, data);
+        else
+            nodeToDelet = this.find(index);
+
+
+        if (nodeToDelet == null) return;
+
+        if (this.head == this.tail) {
+            this.head = null, this.tail = null;
+
+        } else if (this.head == nodeToDelet) {
+            this.head = this.head.next;
+
+        } else {
+            let parent;
+
+            // This because we use index or data to delete node and we use the same function find
+            if (useData)
+                parent = this.find(null, data, true);
+            else
+                parent = this.find(index - 1);
+
+
+            if (this.tail == nodeToDelet) {
+                this.tail = parent;
+                this.tail.next = null;
+            } else {
+                parent.next = nodeToDelet.next;
+            }
+        }
+
+        nodeToDelet.next = null;
+        nodeToDelet = null;
+    }
 }
 
 let list = new LinkedList();
@@ -187,7 +275,9 @@ list.insertLast(3);
 list.printList();
 
 // list.insertAfter(0, 55);
+// list.insertBefore(1, 99);
 
-list.insertBefore(1, 99);
+list.deleteNode(null, 1); // delete using data
+list.deleteNode(1); // delete using index
 
 list.printList();
