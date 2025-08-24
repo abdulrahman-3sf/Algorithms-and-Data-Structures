@@ -21,6 +21,32 @@
     
     Output:
         - None
+
+    --------------------------------------------------------
+    
+    Name: Insert After
+
+    Assumptions:
+        - None
+
+    Inputs:
+        - index
+        - data
+
+    Processes:
+        - validations:
+            - node is not null
+            - check the index if it is valid
+    
+        - insert after:
+            - create node newNode of data
+            - make newNode.next = node of index next pointer
+            - make node of index next pointer = newNode
+            - if newNode.next == null, this mean its is the last node, then:
+                - tail = newNode
+     
+    Output:
+        - None
 */
 
 class LinkedListNode {
@@ -85,6 +111,28 @@ class LinkedList {
             this.tail = newNode;
         }
     }
+
+    find(index) {
+        for (let itr = this.begin(), i = 0; itr.current() != null; itr.next()) {
+            if (i == index)
+                return itr.current();
+            i++;
+        }
+        return null;
+    }
+
+    insertAfter(index, data) {
+        let newNode = new LinkedListNode(data);
+        let nodeBeforeNewNode = this.find(index);
+
+        if (newNode == null || nodeBeforeNewNode == null) return;
+
+        newNode.next = nodeBeforeNewNode.next;
+        nodeBeforeNewNode.next = newNode;
+
+        if (newNode.next == null)
+            this.tail = newNode;
+    }
 }
 
 let list = new LinkedList();
@@ -92,5 +140,9 @@ let list = new LinkedList();
 list.insertLast(1);
 list.insertLast(2);
 list.insertLast(3);
+
+list.printList();
+
+list.insertAfter(0, 55);
 
 list.printList();
