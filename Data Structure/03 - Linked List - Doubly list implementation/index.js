@@ -21,6 +21,34 @@
     
     Output:
         - None
+
+    --------------------------------------------------------
+
+    Name: Insert After
+
+    Assumptions:
+        - None
+
+    Inputs:
+        - index
+        - new data
+
+    Processes:
+        - validations:
+            - None
+    
+        - insert after:
+            - create new node
+            - make newNode.next = nodeBeforeNewNode.next
+            - make newNode.prev = nodeBeforeNewNode
+            - make nodeBeforeNewNode.next = newNode
+            - if newNode.next == null, that's mean the nodeBeforeNewNode was the tail then:
+                - tail = newNode
+            - else, that's mean the newNode between two nodes, then:
+                - newNode.next.prev = newNode
+    
+    Output:
+        - None
 */
 
 class LinkedListNode {
@@ -97,6 +125,20 @@ class LinkedList {
             this.tail = newNode;
         }
     }
+
+    insertAfter(index, data) {
+        let newNode = new LinkedListNode(data);
+        let nodeBeforeNewNode = this.find(index);
+
+        newNode.next = nodeBeforeNewNode.next;
+        newNode.prev = nodeBeforeNewNode;
+        nodeBeforeNewNode.next = newNode;
+
+        if (newNode.next == null)
+            this.tail = newNode;
+        else
+            newNode.next.prev = newNode;
+    }
 }
 
 let list = new LinkedList();
@@ -104,5 +146,7 @@ let list = new LinkedList();
 list.insertLast(1);
 list.insertLast(2);
 list.insertLast(3);
+
+list.insertAfter(1, 44);
 
 list.printList();
