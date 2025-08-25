@@ -115,6 +115,7 @@ class LinkedList {
     constructor() {
         this.head = null;
         this.tail = null;
+        this.length = 0;
     }
 
     begin() {
@@ -155,6 +156,8 @@ class LinkedList {
             this.tail.next = newNode;
             this.tail = newNode;
         }
+
+        this.length++;
     }
 
     insertBefore(index, data) {
@@ -173,6 +176,7 @@ class LinkedList {
         }
 
         nodeAfterNewNode.prev = newNode;
+        this.length++;
     }
 
     insertAfter(index, data) {
@@ -187,6 +191,8 @@ class LinkedList {
             this.tail = newNode;
         else
             newNode.next.prev = newNode;
+
+        this.length++;
     }
 
     deleteNode(data) {
@@ -211,6 +217,7 @@ class LinkedList {
         nodeToDelete.next = null;
         nodeToDelete.prev = null;
         nodeToDelete = null;
+        this.length--;
     }
 }
 
@@ -225,3 +232,5 @@ list.insertLast(3);
 list.insertBefore(2, 33);
 
 list.printList();
+
+console.log(list.length);
