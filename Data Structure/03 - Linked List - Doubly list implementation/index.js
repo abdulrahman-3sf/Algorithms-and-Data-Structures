@@ -157,6 +157,24 @@ class LinkedList {
         }
     }
 
+    insertBefore(index, data) {
+        let newNode = new LinkedListNode(data);
+        let nodeAfterNewNode = this.find(index);
+
+        if (nodeAfterNewNode == null || nodeAfterNewNode == null) return;
+
+        newNode.next = nodeAfterNewNode;
+        newNode.prev = nodeAfterNewNode.prev;
+
+        if (this.head == nodeAfterNewNode) {
+            this.head = newNode;
+        } else {
+            nodeAfterNewNode.prev.next = newNode;
+        }
+
+        nodeAfterNewNode.prev = newNode;
+    }
+
     insertAfter(index, data) {
         let newNode = new LinkedListNode(data);
         let nodeBeforeNewNode = this.find(index);
@@ -202,8 +220,8 @@ list.insertLast(1);
 list.insertLast(2);
 list.insertLast(3);
 
-list.insertAfter(1, 44);
-
-list.deleteNode(1);
+// list.insertAfter(1, 44);
+// list.deleteNode(1);
+list.insertBefore(2, 33);
 
 list.printList();
