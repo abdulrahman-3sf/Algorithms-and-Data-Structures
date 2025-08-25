@@ -49,6 +49,37 @@
     
     Output:
         - None
+
+    --------------------------------------------------------
+
+    Name: Delete Node
+
+    Assumptions:
+        - None
+
+    Inputs:
+        - index or data(to find the node to delete)
+
+    Processes:
+        - validations:
+            - node is not null
+    
+        - delete node:
+            - if head and tail == node then
+                - head and tail = null
+            - if head == node then
+                - head = head.next
+                - head.prev = null
+            - if tail == node then
+                - tail = node.prev
+                - tail.next = null
+            - if node between two nodes then
+                - node.prev.next = node.next
+                - node.next.prev = node.prev
+            - delete node
+    
+    Output:
+        - None
 */
 
 class LinkedListNode {
@@ -139,6 +170,30 @@ class LinkedList {
         else
             newNode.next.prev = newNode;
     }
+
+    deleteNode(data) {
+        let nodeToDelete = this.find(null, data);
+
+        if (nodeToDelete == null) return;
+
+        if (this.head == this.tail) {
+            this.head = null;
+            this.tail = null;
+        } else if (this.head == nodeToDelete) {
+            this.head = this.head.next;
+            this.head.prev = null;
+        } else if (this.tail == nodeToDelete) {
+            this.tail = nodeToDelete.prev;
+            this.tail.next = null;
+        } else {
+            nodeToDelete.prev.next = nodeToDelete.next;
+            nodeToDelete.next.prev = nodeToDelete.prev;
+        }
+
+        nodeToDelete.next = null;
+        nodeToDelete.prev = null;
+        nodeToDelete = null;
+    }
 }
 
 let list = new LinkedList();
@@ -148,5 +203,7 @@ list.insertLast(2);
 list.insertLast(3);
 
 list.insertAfter(1, 44);
+
+list.deleteNode(1);
 
 list.printList();
