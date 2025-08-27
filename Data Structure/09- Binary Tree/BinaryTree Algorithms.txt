@@ -1,0 +1,36 @@
+Name: Breadth first traversal
+Inputs: None
+Processes:
+    add root node to a queue
+    while queue has data:
+        - currentNode = queue.dequeue
+        - print currentNode data
+        - if currentNode.left then enqueue it
+        - if currentNode.right then enqueue it
+
+Outputs: None
+
+-----------------------------------------------------------------------------------
+
+Name: Breadth first insertion
+Inputs: None
+Processes:
+    if root is null
+        - root = newNode
+        - return
+    add root node to a queue
+    while queue has data:
+        - currentNode = queue.Dequeue
+        - if currentNode.left is null
+            - currentNode.left = newNode
+            - break
+        - else
+            - enqueue currentNode.left
+        
+        - if currentNode.right is null
+            - currentNode.right = newNode
+            - break
+        - else
+            - enqueue currentNode.right
+
+Outputs: None
