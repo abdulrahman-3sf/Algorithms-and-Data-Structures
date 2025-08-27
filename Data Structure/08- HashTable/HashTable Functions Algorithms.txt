@@ -1,0 +1,71 @@
+Name: Hash
+Inputs: key
+Processes:
+    hashed_key = offset_basis
+    for each octet_of_data to be hashed
+        - hashed_key = hashed_key xor octet_of_data
+        - hashed_key = hashed_key * FNV_Prime
+    hashed_key = hashed_key % hashtable_length
+
+Outputs: hashed key
+
+-----------------------------------------------------------------------------------
+
+[Linear Probing]
+Name: collision_handling
+Inputs: key, hash, set or get
+Processes:
+    for i = 1 to hash table length - 1
+        - new_hash = (hash + i) % (hash table length)
+
+    if set AND (entries[new_hash] is empty OR entries[new_hash].key == key)
+        - return new_hash
+    else if get AND entries[new_hash].key == key
+        - return new_hash
+    else
+        - continue
+    
+    new_hash = -1
+
+Outputs: new_hash
+
+-----------------------------------------------------------------------------------
+
+Name: AddToEntries
+Inputs: key, value
+Processes:
+    index = hash(key, size)
+    item = entries[index]
+
+    if entries[index].key not empty AND != key
+        - index = collision_handling()
+        - item = entries[index]
+
+    if index == -1 THROW an EXCEPTION
+
+    if entries[index] is empty
+        - create new KeyValuePair then add it to entries[index]
+        - increase entriesCount by one
+    else if item key = key
+        - update the value
+    else
+    - THROW an EXCEPTION
+
+Outputs: None
+
+-----------------------------------------------------------------------------------
+
+Name: ResizeOrNot
+Inputs: None
+Processes:
+    if entriesCount less than entries array length
+        - do not resize and EXCEPTION
+    else
+        - new size = current entries array length * 2
+        - make a copy from the entries array
+        - entries array = new entries array with new size
+        - for each entry in entries copy array
+            - call addToEntries funciton
+        delete entries copy array
+
+Outputs: None
