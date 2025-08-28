@@ -33,4 +33,15 @@ Processes:
         - else
             - enqueue currentNode.right
 
+
+Outputs: None
+
+-----------------------------------------------------------------------------------
+
+Name: Height
+Inputs: node
+Processes:
+    if node == null return 0
+    return 1 + max(height node.left, height node.right)
+
 Outputs: None
