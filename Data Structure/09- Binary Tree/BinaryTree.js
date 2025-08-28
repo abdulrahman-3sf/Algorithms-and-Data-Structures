@@ -33,6 +33,11 @@ module.exports = class BinaryTree {
         }
     }
 
+    height(node = this.root) {
+        if (node == null) return 0;
+        return 1 + Math.max(this.height(node.left), this.height(node.right));
+    }
+
     print() {
         if (this.root == null) {
             console.log("Tree is empty");
@@ -71,4 +76,5 @@ module.exports = class BinaryTree {
             this.right = null;
         }
     }
+
 }
