@@ -33,7 +33,6 @@ Processes:
         - else
             - enqueue currentNode.right
 
-
 Outputs: None
 
 -----------------------------------------------------------------------------------
@@ -45,3 +44,40 @@ Processes:
     return 1 + max(height node.left, height node.right)
 
 Outputs: None
+
+-----------------------------------------------------------------------------------
+
+Name: Pre Order
+Processes: Node -> Left -> Right
+
+Name: In Order
+Processes: Left -> Node -> Right
+
+Name: Pre Order
+Processes: Left -> Right -> Node
+
+-----------------------------------------------------------------------------------
+
+Name: Find
+Inputs: data
+Processes:
+    apply any traversal method
+
+Outputs: node
+
+-----------------------------------------------------------------------------------
+
+Name: Delete
+Inputs: data
+Processes:
+    replace the node by the bottem-most-right node (last node) of the tree
+
+    find parent, left, right of the node
+    find the last node
+    make last node point to node childs
+    make node parent point to last node
+    clear the pointer of last node in its parent
+    make node equal null
+
+Outputs: None
+
