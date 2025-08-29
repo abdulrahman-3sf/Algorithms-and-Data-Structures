@@ -96,5 +96,31 @@ Processes:
             else
                 parent.right = null
 
-
 Outputs: node/null
+
+-----------------------------------------------------------------------------------
+
+Name: Balance
+Inputs: root
+Processes:
+    balance():
+        nodes[]
+        inOrderToArray(root, nodes)
+        root = recursiveBalance(O, nodes.length -1, nodes);
+
+    InorderToArray(node, nodes):
+        if node == null return
+        inOrderToArray(node.left, nodes)
+        nodes.pust(node.data)
+        inOrderToArray(node.right, nodes)
+
+    recursiveBaIance(start, end, nodes):
+        if (start > end) return null
+        int mid = ( start + end ) / 2
+        create newNode
+        newNode.data = nodes[mid]
+        newNode.Ieft = recursiveBalance(start, mid - 1, nodes)
+        newNode.right = recursiveBaIance(mid + 1, end, nodes)
+        return newNode
+
+Outputs: None
