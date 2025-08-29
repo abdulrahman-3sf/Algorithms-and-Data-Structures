@@ -141,6 +141,31 @@ module.exports = class BinarySearchTree {
         nodeAndParentInfo.node = null;
     }
 
+    balance() {
+        let nodes = [];
+        this.#inOrderToArray(this.root, nodes);
+        this.root = this.#recursiveBalance(0, nodes.length - 1, nodes);
+    }
+
+    #inOrderToArray(node, nodes) {
+        if (node == null) return;
+        this.#inOrderToArray(node.left, nodes);
+        nodes.push(node.data);
+        this.#inOrderToArray(node.right, nodes);
+    }
+
+    #recursiveBalance(start, end, nodes) {
+        if (start > end) return null;
+        let mid = Math.floor((start + end) / 2);
+
+        let newNode = new BinarySearchTree.TreeNode(nodes[mid]);
+
+        newNode.left = this.#recursiveBalance(start, mid - 1, nodes);
+        newNode.right = this.#recursiveBalance(mid + 1, end, nodes);
+
+        return newNode;
+    }
+
     preOrder(node = this.root) {
         let result = [];
         this.#internalPreOrder(node, result);
