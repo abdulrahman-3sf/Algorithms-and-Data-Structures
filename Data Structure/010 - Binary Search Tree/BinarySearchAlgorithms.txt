@@ -1,0 +1,100 @@
+-----------------------------------------------------------------------------------
+
+Name: Insert | O(log n)
+Inputs: data
+Processes:
+    if root is null
+        node = newNode(data)
+        return
+    currentNode = root
+    while currentNode is not null
+        if data < currentNode.data
+            if currentNode.left is null
+                currentNode.left = newNode
+                break
+            else
+                currentNode = currentNode.left
+
+        else
+            if currentNode.right is null
+                currentNode.right = newNode
+                break
+            else
+                currentNode = currentNode.right 
+
+Outputs: None
+
+-----------------------------------------------------------------------------------
+
+Name: Find
+Inputs: data
+Processes:
+    currentNode = root
+
+    while currentNode is not null
+        if data == currentNode.data
+            return currentNode
+        else if data < currentNode.data
+            currentNode = currentNode.left
+        else
+            currentNode = currentNode.right
+    
+    return null
+
+Outputs: node/null
+
+-----------------------------------------------------------------------------------
+
+Name: Delete
+Inputs: data
+Processes:
+    3 cases
+
+    #case 1: Node has two childs
+        find the nodeToDelete
+
+        if nodeToDelet.left not null and nodeToDelete.right not null
+            currentNode = nodeToDelete.right
+            parent = null
+
+            while currentNode.left is not null
+                parent = currentNode
+                currentNode = currentNode.left
+            
+            nodeToDelete.data = currentNode.data
+
+            if parent is not null
+                parent.left = currentNode.right
+            else
+                nodeToDelet.right = currentNode.right
+            
+            currentNode.right = null
+            currentNode = null
+    
+    #case 2: Node has one child
+        find the nodeToDelete
+
+        if nodeToDelet.left not null xor nodeToDelete.right not null
+            nodeToReplace = nodeToDelet.left || nodeToDelet.right
+            nodeToDelet.left = nodeToReplace.left
+            nodeToDelet.right = nodeToReplace.right
+            nodeToDelet.data = nodeToReplace.data
+
+            nodeToReplace.left = null
+            nodeToReplace.right = null
+            nodeToReplace = null
+
+    #case 3: Node is a leaf
+        find the nodeToDelete and its parent
+
+        if nodeToDelet.left is null and nodeToDelete.right is null
+            if parent == null
+                root = null
+            
+            if nodeToDelet is the left of its parent
+                parent.left = null
+            else
+                parent.right = null
+
+
+Outputs: node/null
