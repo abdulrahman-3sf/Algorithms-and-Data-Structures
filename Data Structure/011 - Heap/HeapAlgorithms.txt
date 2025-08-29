@@ -1,0 +1,50 @@
+Name: Insert
+Inputs: data
+Processes:
+    i = size
+    array[i] = data
+    size++
+    
+    parent_index = (i - 1) / 2
+    while ( i && array[i] < array[parent_index])
+        array[i] = array[parent_index]
+        array[parent_index] = data
+        i = parent_index
+        parent_index= (i - 1) / 2
+    return
+
+Outputs: None
+
+-----------------------------------------------------------------------------------
+
+Name: Pop
+Inputs: None
+Processes:
+    i = 0
+    data = array[i]
+    array[i] = array[size - 1]
+    array[size - 1] = null
+    size--
+
+    left_index = (2 * i) + 1
+
+    while (left_index < size)
+        right_index = (2 * i) + 2
+        smaller_index = left_index
+
+        if (array[right_index] != null && array[right_index] < array[smaller_index])
+            smaller_index = right_index
+
+        if (array[smaller_index] >= array[i])
+            break
+
+        temp = array[i]
+        array[i] = array[smaller_index]
+        array[smaller_index] = temp
+
+        i = smaller_index
+        left_index = (2 * i) + 1
+
+    return data
+
+Outputs: data
